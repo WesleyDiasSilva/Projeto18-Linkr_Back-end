@@ -9,7 +9,7 @@ export async function serviceLogin(email, passwordUser) {
     if (!foundUser.status) {
       return {
         status: false,
-        message: "Unable to connect, please try again later!",
+        message: "Unable to connect, please try again later!"
       };
     }
     if (!foundUser.query[0]) {
@@ -22,6 +22,7 @@ export async function serviceLogin(email, passwordUser) {
     }
     const token = createToken({ username, picture_url });
     const createdSession = await createSession(id, token);
+    console.log(createdSession);
     if (!createdSession.status) {
       return res.status(422).send("Unable to connect, please try again later!");
     }
