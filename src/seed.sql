@@ -1,5 +1,5 @@
 CREATE TABLE users (
-  id SERIAL INTEGER PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   email TEXT UNIQUE NOT NULL,
   username VARCHAR(25) UNIQUE NOT NULL,
   password TEXT NOT NULL,
@@ -9,13 +9,13 @@ CREATE TABLE users (
 
 CREATE TABLE likes (
   id SERIAL PRIMARY KEY,
-  post_id INTEGER references "posts"("id") NOT NULL,
-  user_id INTEGER references "users"("id") NOT NULL
+  post_id INTEGER FOREIGN KEY NOT NULL references"posts"("id"),
+  user_id INTEGER FOREIGN KEY NOT NULL references"users"("id")
 )
 
 CREATE TABLE posts (
-  id SERIAL INTEGER PRIMARY KEY,
-  user_id INTEGER NOT NULL references"users"("id"),
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER FOREIGN KEY NOT NULL references"users"("id"),
   link TEXT NOT NULL,
   description TEXT NOT NULL,
   update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -23,12 +23,12 @@ CREATE TABLE posts (
 )
 
 CREATE TABLE posts_trendings (
-  id SERIAL INTEGER PRIMARY KEY,
-  post_id INTEGER NOT NULL references "posts"("id"),
-  trending_id INTEGER NOT NULL references "trendings"("id")
+  id SERIAL PRIMARY KEY,
+  post_id INTEGER FOREIGN KEY NOT NULL references"posts"("id"),
+  trending_id INTEGER FOREIGN KEY NOT NULL references"trendings"("id")
 )
 
 CREATE TABLE trendings (
-  id SERIAL INTEGER PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   name VARCHAR(10) UNIQUE NOT NULL,
 )
