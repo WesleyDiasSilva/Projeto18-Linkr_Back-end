@@ -5,6 +5,7 @@ import { signUpMiddleware } from "../middlewares/authMiddlewares/signUpMiddlewar
 import { postSignUp } from "../controllers/authControllers/signUpController.js";
 import { logoutController } from "../controllers/authControllers/logoutController.js";
 
+
 const route = Router();
 
 route.post("/sign-in", loginMiddleware, loginController);
