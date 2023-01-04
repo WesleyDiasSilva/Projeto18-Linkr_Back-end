@@ -1,7 +1,7 @@
-import { createSession } from "../../repositories/sessions/createSession.js";
 import { findUserByEmail } from "../../repositories/users/findUserByEmail.js";
 import { validateHash } from "../../utils/bcrypt/validationHash.js";
 import { createToken } from "../../utils/jwt/createToken.js";
+import { serviceCreateSession } from "../sessions/serviceCreateSession.js";
 
 export async function serviceLogin(email, passwordUser) {
   try {
@@ -21,9 +21,9 @@ export async function serviceLogin(email, passwordUser) {
       return { status: false, message: "Password incorrect!" };
     }
     const token = createToken({ username, picture_url });
-    const createdSession = await createSession(id, token);
+    const createdSession = await serviceCreateSession(id, token)
     if (!createdSession.status) {
-      return res.status(422).send("Unable to connect, please try again later!");
+      return { status: false, message: createdSession.message }
     }
     return { status: true, message: token };
   } catch (err) {

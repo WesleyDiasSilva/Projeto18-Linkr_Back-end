@@ -9,23 +9,22 @@ CREATE TABLE users (
 
 CREATE TABLE likes (
   id SERIAL PRIMARY KEY,
-  post_id INTEGER FOREIGN KEY NOT NULL references"posts"("id"),
-  user_id INTEGER FOREIGN KEY NOT NULL references"users"("id")
+  post_id INTEGER NOT NULL references"posts"("id"),
+  user_id INTEGER NOT NULL references"users"("id")
 )
 
 CREATE TABLE posts (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER FOREIGN KEY NOT NULL references"users"("id"),
+  user_id INTEGER NOT NULL references"users"("id"),
   link TEXT NOT NULL,
-  description TEXT NOT NULL,
-  update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  description TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL 
 )
 
 CREATE TABLE posts_trendings (
   id SERIAL PRIMARY KEY,
-  post_id INTEGER FOREIGN KEY NOT NULL references"posts"("id"),
-  trending_id INTEGER FOREIGN KEY NOT NULL references"trendings"("id")
+  post_id INTEGER NOT NULL references"posts"("id"),
+  trending_id INTEGER NOT NULL references"trendings"("id")
 )
 
 CREATE TABLE trendings (
