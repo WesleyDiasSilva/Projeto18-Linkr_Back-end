@@ -31,10 +31,3 @@ CREATE TABLE trendings (
   id SERIAL PRIMARY KEY,
   name VARCHAR(10) UNIQUE NOT NULL,
 )
-
-CREATE TABLE sessions (
-  id SERIAL PRIMARY KEY,
-  token TEXT UNIQUE NOT NULL,
-  user_id INTEGER NOT NULL references"users"("id"),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
-)
