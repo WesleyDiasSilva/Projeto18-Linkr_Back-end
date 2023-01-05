@@ -9,7 +9,7 @@ export async function serviceLogin(email, passwordUser) {
     if (!foundUser.status) {
       return {
         status: false,
-        message: "Unable to connect, please try again later!",
+        message: "Unable to connect, please try again later!"
       };
     }
     if (!foundUser.query[0]) {

@@ -4,9 +4,11 @@ import { loginMiddleware } from "../middlewares/authMiddlewares/loginMiddleware.
 import { signUpMiddleware } from "../middlewares/authMiddlewares/signUpMiddleware.js"; 
 import { postSignUp } from "../controllers/authControllers/signUpController.js";
 import { logoutController } from "../controllers/authControllers/logoutController.js";
-
+import { verifySessionController } from "../controllers/authControllers/verifySessionController.js";
 
 const route = Router();
+
+route.post("/session", verifySessionController);
 
 route.post("/sign-in", loginMiddleware, loginController);
 

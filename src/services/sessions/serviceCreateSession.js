@@ -16,7 +16,7 @@ export async function serviceCreateSession(user_id, token) {
         };
       }
     }
-    const createdSession = await createSession(user_id, token);
+    const createdSession = await createSetimelinession(user_id, token);
     if (createdSession.status) {
       return { status: true, message: token };
     }
