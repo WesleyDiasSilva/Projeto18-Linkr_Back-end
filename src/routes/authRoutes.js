@@ -3,11 +3,15 @@ import { loginController } from "../controllers/authControllers/loginController.
 import { loginMiddleware } from "../middlewares/authMiddlewares/loginMiddleware.js";
 import { signUpMiddleware } from "../middlewares/authMiddlewares/signUpMiddleware.js"; 
 import { postSignUp } from "../controllers/authControllers/signUpController.js";
+import { logoutController } from "../controllers/authControllers/logoutController.js";
+
 
 const route = Router();
 
 route.post("/sign-in", loginMiddleware, loginController);
 
 route.post("/sign-up", signUpMiddleware, postSignUp);
+
+route.post("/logout", logoutController);
 
 export default route;
