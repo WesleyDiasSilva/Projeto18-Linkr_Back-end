@@ -10,6 +10,6 @@ const route = Router();
 
 route.post('/post', newPostMiddleware, authMiddleware, newPostController)
 
-route.delete('/delete/:postId', deletePostController)
+route.delete('/delete-post/:postId', deletePostController)
 
 export default route;
