@@ -9,7 +9,8 @@ export async function createSession(user_id, token) {
       [token, user_id]
     );
     return { status: true, query: null };
-  } catch {
+  } catch (err){
+    console.log(err)
     return { status: false, query: null };
   }
 }

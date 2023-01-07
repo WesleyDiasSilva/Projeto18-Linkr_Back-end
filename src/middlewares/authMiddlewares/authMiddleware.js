@@ -5,6 +5,7 @@ export async function authMiddleware(req, res, next){
   try{
     const { authorization } = req.headers;
     const token = authorization?.replace("Bearer ", "");
+    console.log(token)
     const tokenValid = verifyToken(token);
     if(!tokenValid){
       return res.status(409).send("Token Invalid!")
@@ -16,7 +17,7 @@ export async function authMiddleware(req, res, next){
     const user = {
       token,
       username: tokenValid.username,
-      user_id: session.query[0].user_id
+      user_id: session?.query[0].user_id
     }
     req.body.user = user
     next()
