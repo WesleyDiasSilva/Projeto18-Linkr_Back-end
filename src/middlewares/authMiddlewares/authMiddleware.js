@@ -5,7 +5,6 @@ export async function authMiddleware(req, res, next){
   try{
     const { authorization } = req.headers;
     const token = authorization?.replace("Bearer ", "");
-    console.log(token)
     const tokenValid = verifyToken(token);
     if(!tokenValid){
       return res.status(409).send("Token Invalid!")
