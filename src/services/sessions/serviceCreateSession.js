@@ -15,8 +15,8 @@ export async function serviceCreateSession(user_id, token) {
           message: "Unable to connect, please try again later!",
         };
       }
-    }
-    const createdSession = await createSetimelinession(user_id, token);
+    }else{
+      const createdSession = await createSession(user_id, token);
     if (createdSession.status) {
       return { status: true, message: token };
     }
@@ -24,6 +24,7 @@ export async function serviceCreateSession(user_id, token) {
       status: false,
       message: "Unable to connect, please try again later!",
     };
+    }
   } catch (err){
     return { status: false, message: "error" };
   }
