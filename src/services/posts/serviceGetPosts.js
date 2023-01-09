@@ -1,11 +1,11 @@
 import urlMetadata from "url-metadata";
 import { getPosts } from "../../repositories/posts/getPosts.js";
 
-export async function serviceGetPosts(page) {
+export async function serviceGetPosts(page, trending) {
   if (page < 1)
     return { status: false, message: "Page must be bigger that 0!" };
   try {
-    const { query, status } = await getPosts(page);
+    const { query, status } = await getPosts(page, trending);
     if (!status) {
       return { status: false, message: "Error" };
     }
