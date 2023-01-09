@@ -15,11 +15,21 @@ export async function serviceGetPosts(page) {
           const {description, image, title} = (await urlMetadata(post.link));
           return { ...post, descriptionLink: description, imageLink: image, titleLink: title };
         } catch {
-          const {description, title} = (await urlMetadata(post.link));
-          return { ...post, descriptionLink: description, titleLink:title };
+          try {
+            const {description, title} = (await urlMetadata(post.link));
+            return { ...post, descriptionLink: description, titleLink:title };
+          } catch {
+            try{
+              const {description, title} = (await urlMetadata(post.link));
+              return {...post, titleLink:title }
+            } catch(error){
+              console.log('urlMetadata error', error)
+              return{ ...post, descriptionLink: error, titleLink: error };
+            }
+          }
         }
       })
-    );
+    );      
     return { status: true, message: postsMetaData };
   } catch (err) {
     
