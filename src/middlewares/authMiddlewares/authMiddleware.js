@@ -16,7 +16,7 @@ export async function authMiddleware(req, res, next){
     const user = {
       token,
       username: tokenValid.username,
-      user_id: session.query[0].user_id
+      user_id: session?.query[0].user_id
     }
     req.body.user = user
     next()
