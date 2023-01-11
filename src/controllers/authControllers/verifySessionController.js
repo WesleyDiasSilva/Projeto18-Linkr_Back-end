@@ -7,7 +7,7 @@ export async function verifySessionController(req, res)
     {
         const verification = verifyToken(session_token);
         if(verification){
-            return res.sendStatus(200);
+            return res.status(200).send(verification);
         }
         else if(!verification){
             return res.sendStatus(404);
