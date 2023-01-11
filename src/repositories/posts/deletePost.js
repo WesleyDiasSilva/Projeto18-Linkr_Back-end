@@ -1,8 +1,8 @@
 import { db } from "../../database/connection.js";
 
-export async function deletePost(postId, userId) {
+export async function deletePost(postId) {
     try {
-
+        
         const post = await db.query(`
         SELECT * FROM posts
         WHERE id = $1 AND user_id = $2 
