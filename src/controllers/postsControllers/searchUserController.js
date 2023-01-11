@@ -14,6 +14,7 @@ export async function searchUser(req, res){
         res.send(users.rows)
 
     } catch (err){
+        
         console.log(err.message);
         res.status(500).send(err.message);
     }
