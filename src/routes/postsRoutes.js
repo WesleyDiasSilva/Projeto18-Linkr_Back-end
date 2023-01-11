@@ -8,6 +8,7 @@ import {newPostMiddleware} from '../middlewares/postsMiddlewares/newPostMiddlewa
 
 import { likePostMiddleware } from '../middlewares/postsMiddlewares/likePostMiddleware.js';
 import { likePostController } from '../controllers/postsControllers/likePostController.js';
+import { searchUser } from '../controllers/postsControllers/searchUserController.js';
 
 import { getAllHashtags } from "../controllers/postsControllers/getAllHashtags.js";
 
@@ -19,5 +20,6 @@ route.post('/like', likePostMiddleware, likePostController)
 route.get('/hashtag', getAllHashtags)
 route.get('/likes-post/:id', authMiddleware, lastLikesPostController)
 route.delete('/delete-post/:postId', deletePostController)
+route.get('/user', authMiddleware, searchUser)
 
 export default route;
