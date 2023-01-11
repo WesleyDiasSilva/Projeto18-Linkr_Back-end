@@ -18,7 +18,6 @@ export async function postSignUp (req, res){
         res.sendStatus(201);
 
     } catch (err){
-        console.log(err.message);
-        res.status(500).send(err.message);
+        res.status(500).send("Unfortunately, it was not possible to complete your registration, please try again later!");
     }
 }
