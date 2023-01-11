@@ -1,6 +1,6 @@
 import { db } from "../../database/connection.js";
 
-export async function deletePost(postId) {
+export async function deletePost(postId, userId) {
     try {
         
         const post = await db.query(`
