@@ -29,7 +29,6 @@ export async function getUserPosts(id) {
 			ORDER BY p.id desc
 			LIMIT $2;
         `, [id, limitPosts]);
-        console.log(id,posts)
         return { rows: posts.rows, error: false }
     } catch (error) {
         console.log(error)
