@@ -11,6 +11,7 @@ import { likePostController } from '../controllers/postsControllers/likePostCont
 
 import { getAllHashtags } from "../controllers/postsControllers/getAllHashtags.js";
 import { userPostsController } from '../controllers/postsControllers/userPostsController.js';
+import { trendingsController } from '../controllers/postsControllers/trendingsController.js';
 
 const route = Router();
 
@@ -18,6 +19,7 @@ route.post('/post', newPostMiddleware, authMiddleware, newPostController)
 route.get('/posts', authMiddleware, getPostsController)
 route.post('/like', likePostMiddleware, likePostController)
 route.get('/hashtag', getAllHashtags)
+route.get('/hashtag/:hashtag', trendingsController)
 route.get('/likes-post/:id', authMiddleware, lastLikesPostController)
 route.delete('/delete-post/:postId', deletePostController)
 
