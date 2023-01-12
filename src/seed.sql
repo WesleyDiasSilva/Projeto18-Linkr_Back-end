@@ -46,12 +46,12 @@ CREATE TABLE sessions (
 
 CREATE TABLE follows (
   id SERIAL PRIMARY KEY,
-  following_id INTEGER NOT NULL UNIQUE references"users"("id"),
-  follower_id INTEGER NOT NULL UNIQUE references"users"("id")
+  following_id INTEGER NOT NULL references"users"("id"),
+  follower_id INTEGER NOT NULL references"users"("id")
 )
 
 CREATE TABLE comments (
   id SERIAL PRIMARY KEY,
-  post_id INTEGER NOT NULL UNIQUE references"posts"("id"),
-  user_id INTEGER NOT NULL UNIQUE references"users"("id")
+  post_id INTEGER NOT NULL references"posts"("id"),
+  user_id INTEGER NOT NULL references"users"("id")
 )
