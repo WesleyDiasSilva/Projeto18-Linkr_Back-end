@@ -22,8 +22,9 @@ route.post('/like', likePostMiddleware, likePostController)
 route.get('/hashtag', getAllHashtags)
 route.get('/hashtag/:hashtag', authMiddleware, trendingsController)
 route.get('/likes-post/:id', authMiddleware, lastLikesPostController)
-route.delete('/delete-post/:postId', deletePostController)
+route.post('/delete-post/:postId', authMiddleware, deletePostController)
 route.post('/user', authMiddleware, searchUser)
 route.get('/user/:id', authMiddleware, userPostsController)
+
 
 export default route;
