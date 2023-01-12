@@ -12,14 +12,19 @@ import { likePostController } from '../controllers/postsControllers/likePostCont
 import { getAllHashtags } from "../controllers/postsControllers/getAllHashtags.js";
 import { userPostsController } from '../controllers/postsControllers/userPostsController.js';
 
+import { editPostMiddleware } from "../middlewares/postsMiddlewares/editPostMiddleware.js";
+import { editPostController } from "../controllers/postsControllers/editPostController.js";
+
+
 const route = Router();
 
-route.post('/post', newPostMiddleware, authMiddleware, newPostController)
-route.get('/posts', authMiddleware, getPostsController)
-route.post('/like', likePostMiddleware, likePostController)
-route.get('/hashtag', getAllHashtags)
-route.get('/likes-post/:id', authMiddleware, lastLikesPostController)
-route.delete('/delete-post/:postId', deletePostController)
+route.post('/post', newPostMiddleware, authMiddleware, newPostController);
+route.get('/posts', authMiddleware, getPostsController);
+route.post('/like', likePostMiddleware, likePostController);
+route.get('/hashtag', getAllHashtags);
+route.get('/likes-post/:id', authMiddleware, lastLikesPostController);
+route.delete('/delete-post/:postId', deletePostController);
+route.post('/edit', authMiddleware, editPostMiddleware, editPostController);
 
 route.get('/user/:id', userPostsController)
 

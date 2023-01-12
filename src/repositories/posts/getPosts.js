@@ -18,15 +18,17 @@ export async function getPosts(offset, trending) {
 					FROM users u
 					JOIN posts p
 						ON p.user_id = u.id
-					JOIN posts_trendings t
+					LEFT JOIN posts_trendings t
 						ON t.post_id = p.id
 					LEFT JOIN likes l
 						ON l.post_id = p.id
+					LEFT JOIN trendings tr
+						ON tr.id = t.trending_id
 				`;
 
 		if(trending){
 			queryString += `
-			WHERE t.trending_id=${trending}
+			WHERE tr.name='${trending}'	
 			`;
 		}
 
