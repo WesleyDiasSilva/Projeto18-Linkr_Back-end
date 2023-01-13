@@ -8,8 +8,10 @@ export function loginMiddleware(req, res, next) {
     { abortEarly: false }
   );
 
+
   if (validation.error) {
     return res.status(400).send(validation.error);
+    
   }
   req.body.user = { email, password };
   next();
