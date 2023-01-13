@@ -16,7 +16,11 @@ import { trendingsController } from '../controllers/postsControllers/trendingsCo
 
 import { editPostMiddleware } from "../middlewares/postsMiddlewares/editPostMiddleware.js";
 import { editPostController } from "../controllers/postsControllers/editPostController.js";
-
+import { newCommentPostMiddleware } from '../middlewares/postsMiddlewares/newCommentPostMiddleware.js';
+import { newCommentPostController } from '../controllers/postsControllers/newCommentPostController.js';
+import { getPostsCommentsController } from '../controllers/postsControllers/getPostsCommentsController.js';
+import repostPostController from '../controllers/postsControllers/repostPostController.js';
+import { getDataInfosControllers } from '../controllers/postsControllers/getDataInfosControllers.js';
 
 const route = Router();
 
@@ -29,5 +33,9 @@ route.get('/likes-post/:id', authMiddleware, lastLikesPostController)
 route.post('/delete-post/:postId', authMiddleware, deletePostController)
 route.post('/user', authMiddleware, searchUser)
 route.get('/user/:id', authMiddleware, userPostsController)
-
+route.post('/comment', authMiddleware, newCommentPostMiddleware, newCommentPostController);
+route.post('/edit', editPostMiddleware, editPostController);
+route.get('/comments', getPostsCommentsController);
+route.post('/repost/:postId', authMiddleware, repostPostController )
+route.get('/datainfos/:id', authMiddleware, getDataInfosControllers)
 export default route;

@@ -25,7 +25,7 @@ export async function signUpMiddleware (req,res, next){
         
 
     } catch (err){
-        console.log('mid', err);
+        console.log(err);
         res.status(500).send(err.message);
     }
     
