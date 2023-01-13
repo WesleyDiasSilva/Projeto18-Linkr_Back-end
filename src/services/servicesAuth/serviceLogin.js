@@ -26,7 +26,6 @@ export async function serviceLogin(email, passwordUser) {
     }
     
     const token = createToken({ username, picture_url });
-    console.log("oi")
     const createdSession = await serviceCreateSession(id, token)
     
     if (!createdSession.status) {

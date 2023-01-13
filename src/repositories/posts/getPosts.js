@@ -2,80 +2,71 @@ import { db } from "../../database/connection.js";
 
 export async function getPosts(offset, trending) {
 	try {
-		let queryString = "";
-
-		queryString += `
-		SELECT
-			posts.id AS post_id, posts.user_id,
-			users.username, users.picture_url,
-			posts.link, posts.description,
-			COALESCE(COUNT(likes.post_id), 0):: INTEGER AS "Number_of_likes",
-			COALESCE(COUNT(comments.post_id), 0):: INTEGER AS comments_post,
-			COALESCE(COUNT(reposts.post_id), 0):: INTEGER AS reposts_post,
-			posts.created_at
-			FROM posts
-			JOIN users
-			ON posts.user_id = users.id
-			LEFT JOIN posts_trendings
-			ON posts_trendings.post_id = posts.id
-			LEFT JOIN trendings
-			ON trendings.id = posts_trendings.trending_id
-			LEFT JOIN likes
-			ON posts.id = likes.post_id
-			LEFT JOIN comments
-			ON posts.id = comments.post_id
-			LEFT JOIN reposts
-			ON posts.id = reposts.post_id
+		let reposts, posts, normalBaseString, repostBaseString;
+			normalBaseString = `
+				SELECT
+				p.id as post_gid,
+				p.user_id,
+				p.link,
+				p.description,
+				u.picture_url,
+				u.username,
+				p.created_at
+			
+				FROM posts p
+				left JOIN users u ON p.user_id = u.id
 			`;
 
-		if(trending){
-			queryString += `
-			WHERE tr.name=$2	
-			`;
-		}
-
-		queryString += `
-			GROUP BY posts.id, users.username, users.picture_url
-			ORDER BY created_at DESC
-			LIMIT $1;`;
-
-		let posts;
 			if(trending){
-				posts = await db.query(
-					queryString,
-					[offset * 20, trending]
-				);
-			}else{
-				posts = await db.query(
-					queryString,
-					[offset * 20]
-				);
+				normalBaseString =+ `
+					WHERE t.name=$2
+				`;
 			}
-    	return { status: true, query: posts.rows };
+			
+			normalBaseString += `
+				group by  u.picture_url, u.username, post_gid
+				order by p.created_at DESC
+				LIMIT $1;
+			`;
+		
+			
+
+			repostBaseString = `
+				SELECT
+				p.id as post_gid,
+				p.user_id,
+				p.link,
+				p.description,
+				u.picture_url,
+				u.username,
+				p.created_at,
+				(select p.id from posts p join reposts r on r.post_id=p.id limit 1) as repost_id,
+				(select u.id from users u join reposts r on r.user_id=u.id limit 1) as repost_username
+
+
+				FROM reposts r
+				left JOIN users u ON r.user_id = u.id
+				left JOIN posts p ON p.id = r.post_id
+				left JOIN posts_trendings pt ON p.id = pt.post_id 
+				left JOIN trendings t ON t.id = pt.trending_id
+
+				group by p.user_id, post_gid, u.picture_url, u.username
+				order by p.created_at DESC
+				LIMIT $1;
+		`;
+		
+		if(trending){
+			posts = await db.query(normalBaseString, [offset * 20, trending]);
+		}else{
+			posts = await db.query(normalBaseString, [offset * 20]);
+		}
+		
+		reposts = await db.query(repostBaseString, [offset * 20])	
+
+		const fullQuery = [...reposts.rows, ...posts.rows];
+    	return { status: true, query: fullQuery };
   } catch (err) {
 		console.log(err)
 		return { status: false, query: null };
   }
 }
-
-/*
-SELECT 
-	p.id, 	
-	p.user_id, 
-	p.link, 
-	p.description, 
-	p.created_at, 
-	(select count(l) from likes l where l.post_id = p.id) AS "Number_of_likes",
-	(select 1 from likes where user_id=p.user_id and post_id=p.id) as "youLiked",
-	u.username, 
-	u.picture_url
-		FROM users u
-		JOIN posts p
-			ON p.user_id = u.id
-		LEFT JOIN posts_trendings t
-			ON t.post_id = p.id
-		LEFT JOIN likes l
-			ON l.post_id = p.id
-		LEFT JOIN trendings tr
-			ON tr.id = t.trending_id
-*/

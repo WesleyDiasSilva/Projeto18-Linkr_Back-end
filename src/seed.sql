@@ -49,5 +49,8 @@ CREATE TABLE follows (
 CREATE TABLE comments (
   id SERIAL PRIMARY KEY,
   post_id INTEGER NOT NULL references"posts"("id"),
-  user_id INTEGER NOT NULL references"users"("id")
+  user_id INTEGER NOT NULL references"users"("id"),
+	text TEXT NOT NULL,
+	created_at DATE DEFAULT NOW()
 )
+	
