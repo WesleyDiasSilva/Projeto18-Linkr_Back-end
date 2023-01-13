@@ -11,8 +11,8 @@ export async function getPosts(offset, trending) {
 				p.link, 
 				p.description, 
 				p.created_at, 
-				COUNT(l.post_id) AS "Number_of_likes",
-				(select id from likes where user_id=p.user_id and post_id=p.id) as "youLiked",
+				(select count(l) from likes l where l.post_id = p.id) AS "Number_of_likes",
+				(select 1 from likes where user_id=p.user_id and post_id=p.id) as "youLiked",
 				u.username, 
 				u.picture_url
 					FROM users u
@@ -21,11 +21,14 @@ export async function getPosts(offset, trending) {
 					LEFT JOIN posts_trendings t
 						ON t.post_id = p.id
 					LEFT JOIN likes l
-						ON l.post_id = p.id`;
+						ON l.post_id = p.id
+					LEFT JOIN trendings tr
+						ON tr.id = t.trending_id
+				`;
 
 		if(trending){
 			queryString += `
-			WHERE t.trending_id=${trending}
+			WHERE tr.name='${trending}'	
 			`;
 		}
 

@@ -14,6 +14,10 @@ import { getAllHashtags } from "../controllers/postsControllers/getAllHashtags.j
 import { userPostsController } from '../controllers/postsControllers/userPostsController.js';
 import { trendingsController } from '../controllers/postsControllers/trendingsController.js';
 
+import { editPostMiddleware } from "../middlewares/postsMiddlewares/editPostMiddleware.js";
+import { editPostController } from "../controllers/postsControllers/editPostController.js";
+
+
 const route = Router();
 
 route.post('/post', newPostMiddleware, authMiddleware, newPostController)
@@ -25,6 +29,5 @@ route.get('/likes-post/:id', authMiddleware, lastLikesPostController)
 route.post('/delete-post/:postId', authMiddleware, deletePostController)
 route.post('/user', authMiddleware, searchUser)
 route.get('/user/:id', authMiddleware, userPostsController)
-
 
 export default route;

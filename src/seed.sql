@@ -21,11 +21,7 @@ CREATE TABLE likes (
   user_id INTEGER NOT NULL references"users"("id")
 )
 
-CREATE TABLE reposts (
-  id SERIAL PRIMARY KEY,
-  post_id INTEGER NOT NULL references"posts"("id"),
-  user_id INTEGER NOT NULL references"users"("id")
-)
+
 
 CREATE TABLE trendings (
   id SERIAL PRIMARY KEY,
